@@ -1,0 +1,153 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.card {
+  width: 100%;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+}
+
+.front,
+.back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 320px;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.front {
+  background: #ffffff;
+  border: 2px solid #e8e8e8;
+}
+
+.back {
+  background: #f8f9fa;
+  border: 2px solid #d0d7de;
+  transform: rotateY(180deg);
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.word {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.ipa {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin: 0;
+  font-family: 'Lucida Sans Unicode', sans-serif;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: #adb5bd;
+  margin-top: 24px;
+}
+
+.meaning {
+  font-size: 1.3rem;
+  color: #2d3748;
+  margin: 0;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.example {
+  margin-top: 16px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  width: 100%;
+}
+
+.exampleEn {
+  font-size: 1rem;
+  color: #2d3748;
+  margin: 0 0 8px 0;
+  font-style: italic;
+}
+
+.exampleZh {
+  font-size: 0.9rem;
+  color: #718096;
+  margin: 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.btn {
+  flex: 1;
+  padding: 14px 8px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn0 {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.btn1 {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.btn2 {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.btn3 {
+  background: #dbeafe;
+  color: #2563eb;
+}

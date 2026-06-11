@@ -1,0 +1,59 @@
+.container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.backArrow {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 4px 8px;
+}
+
+.progress {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.done {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.done h2 {
+  font-size: 1.6rem;
+  color: #1a1a2e;
+  margin: 0 0 12px 0;
+}
+
+.done p {
+  color: #6c757d;
+  margin: 0 0 32px 0;
+}
+
+.backBtn {
+  padding: 14px 32px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}

@@ -1,0 +1,95 @@
+.container {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.backArrow {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 4px 8px;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.overview {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.overviewItem {
+  flex: 1;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.overviewNumber {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.overviewLabel {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.heatmapSection {
+  margin-top: 24px;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 16px 0;
+}
+
+.heatmap {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.heatmapCell {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  cursor: default;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: #6c757d;
+  justify-content: flex-end;
+}
+
+.legendCell {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
