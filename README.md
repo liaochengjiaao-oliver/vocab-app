@@ -1,73 +1,55 @@
-# React + TypeScript + Vite
+# Vocab App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+面向赴美留学生活的大屏背单词应用。卡片式学习 + SM-2 间隔重复算法，500 条地道英语表达，涵盖日常用语、短语动词、俚语、习语和网络用语。
 
-Currently, two official plugins are available:
+## 功能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **卡片学习**：正面显示单词/短语和音标，点击翻转查看释义和例句
+- **四级评分**：忘了 / 模糊 / 想起 / 熟练，对应 SM-2 算法的 0-3 分
+- **间隔重复**：基于 SM-2 算法自动安排复习日期
+- **分类标签**：日常 / 短语 / 俚语 / 习语 / 网络用语，颜色区分
+- **筛选功能**：按分类和难度（基础/进阶/挑战）筛选学习范围
+- **统计面板**：今日新学、复习次数、正确率、30 天热力图
+- **本地存储**：IndexedDB 存储学习进度，无需后端
 
-## React Compiler
+## 快速开始
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+浏览器打开 `http://localhost:5173` 即可使用。
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 构建部署
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+产物在 `dist/` 目录，可直接部署到 GitHub Pages、Vercel 或任何静态托管服务。
+
+## 词库
+
+500 条词条，每条包含：
+
+| 字段 | 说明 |
+|------|------|
+| word | 单词或短语 |
+| ipa | IPA 音标 |
+| meaning | 中文释义 |
+| example | 英文例句 |
+| exampleZh | 例句翻译 |
+| tag | 分类（daily/phrase/slang/idiom/internet） |
+| level | 难度（1 基础 / 2 进阶 / 3 挑战） |
+
+## 技术栈
+
+- React 18 + TypeScript + Vite
+- IndexedDB（idb 库）
+- CSS Modules
+- SM-2 间隔重复算法
+
+## License
+
+MIT
