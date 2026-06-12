@@ -1,5 +1,5 @@
 .container {
-  max-width: 560px;
+  max-width: 640px;
   margin: 0 auto;
   padding: 24px;
 }
@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .backArrow {
@@ -27,43 +27,473 @@
   margin: 0;
 }
 
-.overview {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 40px;
+.progressCard {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 18px;
+  padding: 24px;
+  margin-bottom: 18px;
+  box-shadow: 0 12px 28px rgba(102, 126, 234, 0.22);
 }
 
-.overviewItem {
-  flex: 1;
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.cardEyebrow {
+  font-size: 0.8rem;
+  opacity: 0.78;
+  margin: 0 0 6px 0;
+}
+
+.progressTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.progressPercent {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.progressBar {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.progressMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.86rem;
+  opacity: 0.86;
+  margin-top: 12px;
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.metricCard {
+  background: #f8f9fa;
+  border-radius: 14px;
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.metricValue {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #667eea;
+}
+
+.metricLabel {
+  font-size: 0.78rem;
+  color: #6c757d;
+}
+
+.changeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.changeCard {
   background: #f8f9fa;
   border-radius: 12px;
-  padding: 20px 12px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.changePositive,
+.changeNegative,
+.changeNeutral {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.changePositive {
+  color: #16a34a;
+}
+
+.changeNegative {
+  color: #dc2626;
+}
+
+.changeNeutral {
+  color: #667eea;
+}
+
+.section,
+.heatmapSection {
+  background: #ffffff;
+  border: 1px solid #edf0f3;
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 16px;
+  box-shadow: 0 6px 18px rgba(20, 24, 40, 0.04);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 14px 0;
+}
+
+.sectionHeader .sectionTitle {
+  margin-bottom: 0;
+}
+
+.warningBadge {
+  background: #fee2e2;
+  color: #dc2626;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.sectionAction {
+  border: none;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #667eea;
+  padding: 7px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.sectionAction:hover:not(:disabled) {
+  background: #667eea;
+  color: #ffffff;
+}
+
+.sectionAction:disabled {
+  color: #9ca3af;
+  background: #f3f4f6;
+  cursor: not-allowed;
+}
+
+.forecastList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.forecastItem {
+  display: grid;
+  grid-template-columns: 42px 1fr 34px;
+  align-items: center;
+  gap: 10px;
+}
+
+.forecastLabel {
+  font-size: 0.82rem;
+  color: #4b5563;
+}
+
+.forecastBarTrack {
+  height: 10px;
+  background: #eef2ff;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.forecastBarFill {
+  height: 100%;
+  background: #667eea;
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.forecastCount {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #374151;
+  text-align: right;
+}
+
+.sectionHint {
+  color: #8a94a6;
+  font-size: 0.82rem;
+  margin: 14px 0 0 0;
+}
+
+.trendList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.trendItem {
+  display: grid;
+  grid-template-columns: 54px 1fr 1fr;
+  align-items: center;
+  gap: 8px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.trendLabel {
+  color: #4b5563;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.trendForgot,
+.trendImprove {
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 5px 8px;
+  text-align: center;
+}
+
+.trendForgot {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.trendImprove {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.timeDistGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.timeDistItem {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.timeDistValue {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #667eea;
+}
+
+.timeDistLabel {
+  font-size: 0.78rem;
+  color: #6c757d;
+  font-weight: 700;
+}
+
+.atRiskList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.atRiskItem {
+  display: grid;
+  grid-template-columns: 28px 100px 1fr 50px;
+  align-items: center;
+  gap: 10px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.atRiskRank {
+  color: #c2410c;
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.atRiskWord {
+  color: #1a1a2e;
+  font-size: 0.85rem;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.atRiskBar {
+  height: 8px;
+  background: #fed7aa;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.atRiskFill {
+  height: 100%;
+  background: linear-gradient(90deg, #f97316, #dc2626);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.atRiskScore {
+  color: #dc2626;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-align: right;
+}
+
+.gradeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.gradeItem {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 14px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
 }
 
-.overviewNumber {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #667eea;
+.gradeDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
 }
 
-.overviewLabel {
-  font-size: 0.8rem;
+.gradeForgot {
+  background: #ef4444;
+}
+
+.gradeVague {
+  background: #f59e0b;
+}
+
+.gradeRecall {
+  background: #10b981;
+}
+
+.gradeSkilled {
+  background: #3b82f6;
+}
+
+.gradeLabel {
+  font-size: 0.78rem;
   color: #6c757d;
 }
 
-.heatmapSection {
-  margin-top: 24px;
+.gradeCount {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #1f2937;
 }
 
-.sectionTitle {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin: 0 0 16px 0;
+.weakList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.weakItem {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.weakRank {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #eef2ff;
+  color: #667eea;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+}
+
+.weakContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.weakWord {
+  font-weight: 800;
+  color: #1f2937;
+}
+
+.weakMeaning {
+  font-size: 0.82rem;
+  color: #6c757d;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.weakBadge {
+  background: #fff7ed;
+  color: #ea580c;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.emptyText {
+  color: #8a94a6;
+  font-size: 0.9rem;
+  margin: 0;
 }
 
 .heatmap {
@@ -93,3 +523,27 @@
   height: 14px;
   border-radius: 3px;
 }
+
+@media (max-width: 520px) {
+  .container {
+    padding: 20px;
+  }
+
+  .metricGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gradeGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .weakItem {
+    grid-template-columns: 28px 1fr;
+  }
+
+  .weakBadge {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+

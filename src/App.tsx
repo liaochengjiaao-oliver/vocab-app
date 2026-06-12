@@ -8,7 +8,7 @@ import { Learn } from './pages/Learn'
 import { Review } from './pages/Review'
 import { Stats } from './pages/Stats'
 
-type Page = 'home' | 'learn' | 'review' | 'stats'
+type Page = 'home' | 'learn' | 'review' | 'weakReview' | 'stats'
 
 export default function App() {
   const [db, setDb] = useState<IDBPDatabase<WordDB> | null>(null)
@@ -34,8 +34,10 @@ export default function App() {
       return <Learn db={db} onBack={() => setPage('home')} />
     case 'review':
       return <Review db={db} onBack={() => setPage('home')} />
+    case 'weakReview':
+      return <Review db={db} onBack={() => setPage('stats')} weakOnly />
     case 'stats':
-      return <Stats db={db} onBack={() => setPage('home')} />
+      return <Stats db={db} onBack={() => setPage('home')} onNavigate={(p) => setPage(p as Page)} />
     default:
       return <Home db={db} onNavigate={(p) => setPage(p as Page)} />
   }

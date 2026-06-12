@@ -4,7 +4,7 @@ import type { WordDB } from '../db'
 import type { WordEntry } from '../data/words'
 import { getUnlearnedWords } from '../db/words'
 import { getProgress, saveProgress } from '../db/progress'
-import { recordNewWord, recordReview } from '../db/stats'
+import { recordNewWord, recordReview, getTodayStats } from '../db/stats'
 import { createInitialProgress, applyGrade } from '../lib/sm2'
 import type { Grade } from '../db/types'
 import { FlashCard } from '../components/FlashCard'
@@ -16,26 +16,36 @@ interface LearnProps {
   onBack: () => void
 }
 
-const DAILY_LIMIT = 10
+const DAILY_LIMIT = 50
 
 export function Learn({ db, onBack }: LearnProps) {
   const [words, setWords] = useState<WordEntry[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [learnedCount, setLearnedCount] = useState(0)
+  const [sessionGradeCounts, setSessionGradeCounts] = useState([0, 0, 0, 0])
   const [done, setDone] = useState(false)
   const [started, setStarted] = useState(false)
   const [filterTag, setFilterTag] = useState<WordEntry['tag'] | 'all'>('all')
   const [filterLevel, setFilterLevel] = useState<number | 'all'>('all')
+  const [todayNewWords, setTodayNewWords] = useState(0)
 
   useEffect(() => {
     async function load() {
       const filter: { tag?: WordEntry['tag']; level?: number } = {}
       if (filterTag !== 'all') filter.tag = filterTag
       if (filterLevel !== 'all') filter.level = filterLevel
-      const unlearned = await getUnlearnedWords(db, DAILY_LIMIT, filter)
+
+      const todayStats = await getTodayStats(db)
+      const remainingGoalCount = Math.max(DAILY_LIMIT - todayStats.newWords, 0)
+      const unlearned = remainingGoalCount > 0
+        ? await getUnlearnedWords(db, remainingGoalCount, filter)
+        : []
+
+      setTodayNewWords(todayStats.newWords)
       setWords(unlearned)
       setCurrentIndex(0)
       setLearnedCount(0)
+      setSessionGradeCounts([0, 0, 0, 0])
       setDone(false)
     }
     if (!started) load()
@@ -56,6 +66,7 @@ export function Learn({ db, onBack }: LearnProps) {
     await saveProgress(db, updated)
 
     setLearnedCount((c) => c + 1)
+    setSessionGradeCounts((counts) => getNextGradeCounts(counts, grade))
     setStarted(true)
 
     if (currentIndex + 1 >= words.length) {
@@ -65,12 +76,33 @@ export function Learn({ db, onBack }: LearnProps) {
     }
   }, [db, words, currentIndex])
 
+  const currentTodayNewWords = todayNewWords + learnedCount
+  const remainingGoalCount = Math.max(DAILY_LIMIT - currentTodayNewWords, 0)
+  const targetCompleted = remainingGoalCount === 0
+
   if (done) {
     return (
       <div className={styles.container}>
         <div className={styles.done}>
-          <h2>今日学习完成</h2>
-          <p>已学习 {learnedCount} 个新词</p>
+          <h2>{targetCompleted ? '今日新学目标完成' : '今日学习完成'}</h2>
+          <p>{targetCompleted ? `今天已新学 ${currentTodayNewWords} 个词，可以去复习或休息一下。` : `已学习 ${learnedCount} 个新词，今日还需新学 ${remainingGoalCount} 个。`}</p>
+          <div className={styles.progressTrack}>
+            <div className={styles.progressFill} style={{ width: `${Math.min(100, Math.round((currentTodayNewWords / DAILY_LIMIT) * 100))}%` }} />
+          </div>
+          <p className={styles.progressText}>{currentTodayNewWords}/{DAILY_LIMIT}</p>
+          <div className={styles.sessionSummary}>
+            {[
+              { label: '忘了', count: sessionGradeCounts[0] },
+              { label: '模糊', count: sessionGradeCounts[1] },
+              { label: '想起', count: sessionGradeCounts[2] },
+              { label: '熟练', count: sessionGradeCounts[3] },
+            ].map((item) => (
+              <div key={item.label} className={styles.summaryItem}>
+                <span className={styles.summaryValue}>{item.count}</span>
+                <span className={styles.summaryLabel}>{item.label}</span>
+              </div>
+            ))}
+          </div>
           <button className={styles.backBtn} onClick={onBack}>返回首页</button>
         </div>
       </div>
@@ -91,8 +123,8 @@ export function Learn({ db, onBack }: LearnProps) {
           onLevelChange={setFilterLevel}
         />
         <div className={styles.done}>
-          <h2>暂无新词可学</h2>
-          <p>当前筛选条件下的词都已学习过</p>
+          <h2>{targetCompleted ? '今日新学目标已完成' : '暂无新词可学'}</h2>
+          <p>{targetCompleted ? `今天已新学 ${currentTodayNewWords} 个词，建议去复习或休息一下。` : '当前筛选条件下的词都已学习过'}</p>
           <button className={styles.backBtn} onClick={onBack}>返回首页</button>
         </div>
       </div>
@@ -107,15 +139,27 @@ export function Learn({ db, onBack }: LearnProps) {
           {currentIndex + 1} / {words.length}
         </span>
       </div>
-      {!started && (
+      <div className={styles.goalBanner}>
+        <span>{targetCompleted ? '今日新学目标已完成' : `今日还需新学 ${remainingGoalCount} 个`}</span>
+        <strong>{currentTodayNewWords}/{DAILY_LIMIT}</strong>
+      </div>
+      <div className={!started ? undefined : styles.filterHidden}>
         <FilterPanel
           selectedTag={filterTag}
           selectedLevel={filterLevel}
           onTagChange={setFilterTag}
           onLevelChange={setFilterLevel}
         />
-      )}
-      <FlashCard word={words[currentIndex]} onGrade={handleGrade} />
+      </div>
+      <FlashCard key={words[currentIndex].id} word={words[currentIndex]} onGrade={handleGrade} />
     </div>
   )
+}
+
+function getNextGradeCounts(counts: number[], grade: number): number[] {
+  if (grade < 0 || grade > 3) {
+    return counts
+  }
+
+  return counts.map((count, index) => index === grade ? count + 1 : count)
 }

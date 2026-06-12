@@ -1,43 +1,24 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  width: 100%;
-  max-width: 480px;
+  width: min(480px, calc(100vw - 48px));
+  min-width: 280px;
   margin: 0 auto;
 }
 
 .card {
   width: 100%;
-  perspective: 1000px;
+  min-width: 0;
   cursor: pointer;
 }
 
-.cardInner {
-  position: relative;
+.cardFace {
   width: 100%;
-  min-height: 320px;
-  transform-style: preserve-3d;
-  transition: transform 0.4s ease;
-}
-
-.front,
-.back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  min-height: 320px;
-  backface-visibility: hidden;
+  min-width: 0;
+  box-sizing: border-box;
   border-radius: 16px;
   padding: 40px 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  overflow: hidden;
 }
 
 .front {
@@ -48,25 +29,31 @@
 .back {
   background: #f8f9fa;
   border: 2px solid #d0d7de;
-  transform: rotateY(180deg);
 }
 
-.flipped {
-  transform: rotateY(180deg);
+.hidden {
+  display: none;
 }
 
 .word {
-  font-size: 2rem;
+  font-size: clamp(1.35rem, 6vw, 2rem);
   font-weight: 700;
   color: #1a1a2e;
-  margin: 0;
+  margin: 8px 0 0 0;
+  line-height: 1.22;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .ipa {
   font-size: 1.1rem;
   color: #6c757d;
-  margin: 0;
+  margin: 8px 0 0 0;
+  line-height: 1.45;
   font-family: 'Lucida Sans Unicode', sans-serif;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .hint {
@@ -78,9 +65,11 @@
 .meaning {
   font-size: 1.3rem;
   color: #2d3748;
-  margin: 0;
+  margin: 12px 0 0 0;
   text-align: center;
   line-height: 1.6;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .example {
@@ -90,6 +79,7 @@
   border-radius: 8px;
   border-left: 4px solid #667eea;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .exampleEn {
@@ -97,20 +87,24 @@
   color: #2d3748;
   margin: 0 0 8px 0;
   font-style: italic;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .exampleZh {
   font-size: 0.9rem;
   color: #718096;
   margin: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .buttons {
   display: flex;
   gap: 12px;
   width: 100%;
-  position: relative;
-  z-index: 10;
+  box-sizing: border-box;
+  margin-top: 24px;
 }
 
 .btn {
@@ -150,4 +144,62 @@
 .btn3 {
   background: #dbeafe;
   color: #2563eb;
+}
+
+.shortcutActive {
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.28);
+  filter: brightness(0.98);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.buttonKey {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 6px;
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+  font-family: inherit;
+  font-size: 0.82rem;
+  margin-right: 4px;
+  padding: 2px 6px;
+}
+
+.shortcutGuide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  color: #868e96;
+  font-size: 0.82rem;
+}
+
+.shortcutGuide span {
+  background: #f8f9fa;
+  border: 1px solid #edf0f2;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.shortcutGuide kbd {
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  color: #495057;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 3px 6px;
+}
+
+.shortcutActivePill {
+  background: #eef2ff !important;
+  border-color: #c7d2fe !important;
+  color: #4f46e5 !important;
+  transform: translateY(-1px);
 }
